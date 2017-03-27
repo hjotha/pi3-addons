@@ -3,6 +3,7 @@
 import os
 import time
 import signal
+import psutil
 import RPi.GPIO as GPIO
 
 import gi
@@ -23,8 +24,9 @@ from PIL import ImageDraw
 # constants
 FAN_PIN = 15
 MAX_TEMPERATURE = 60
+MAX_CPU_USAGE = 60
 TEMPERATURE_UPDATE_TIMEOUT = 4000
-TEMPERATURE_COOLING_TIMEOUT = 60000
+TEMPERATURE_COOLING_TIMEOUT = 15000
 
 APPINDICATOR_ID = 'temp-applet'
 
@@ -49,9 +51,10 @@ def fan_off():
 
 def update_fan():
 	
-	temp = get_temperature()
+	temp = float( get_temperature() )
+	cpu = psutil.cpu_percent()
 
-	if float(temp) >= MAX_TEMPERATURE:
+	if temp >= MAX_TEMPERATURE or cpu >= MAX_CPU_USAGE:
 		fan_on()
 		gobject.timeout_add(TEMPERATURE_COOLING_TIMEOUT, update_fan)
 	else:
@@ -68,7 +71,7 @@ def update_temperature():
 	tempf = int(float(temp))
 	
 	if tempf != last_temp:
-		last_temp = temp
+		last_temp = tempf
 		if tempf >= MAX_TEMPERATURE:
 			image = create_indicator_image( temp, COLOR_RED )
 		else:
@@ -81,7 +84,7 @@ def update_temperature():
 def create_indicator_image( temp, color ):
 
 	#create image
-	img = Image.new('RGB', (18, 18))
+	img = Image.new('RGB', (21, 19))
 	
 	#fill background
 	img.paste( (60,59,55), [0,0,img.size[0],img.size[1]])
@@ -89,8 +92,10 @@ def create_indicator_image( temp, color ):
 	font = ImageFont.truetype("/usr/share/fonts/truetype/freefont/FreeMono.ttf", 15)
 	draw = ImageDraw.Draw(img)
 	
-	draw.text((0, 2), temp, color, font=font)
-
+	draw.text((1, 2), temp, color, font=font)
+	if GPIO.input(FAN_PIN) == True:
+		draw.ellipse( (0, 0, 20, 18), fill=None, outline=COLOR_RED)
+	
 	image = os.path.abspath('temp.png')
 	img.save( image )
 
