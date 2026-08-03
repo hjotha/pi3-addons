@@ -1,0 +1,148 @@
+{
+  "communities": {
+    "0": [
+      "rpi_gpio",
+      "temp_applet",
+      "temp_applet_build_menu",
+      "temp_applet_create_indicator",
+      "temp_applet_fan_off",
+      "temp_applet_quit"
+    ],
+    "1": [
+      "temp_applet_create_indicator_image",
+      "temp_applet_get_temperature",
+      "temp_applet_update_temperature"
+    ],
+    "2": [
+      "temp_applet_fan_on",
+      "temp_applet_update_fan"
+    ],
+    "3": [
+      "gi_repository_appindicator3"
+    ],
+    "4": [
+      "openwiki_quickstart"
+    ],
+    "5": [
+      "pil_draw_ellipse"
+    ],
+    "6": [
+      "psutil_cpu_percent"
+    ],
+    "7": [
+      "readme"
+    ],
+    "8": [
+      "vcgencmd_measure_temp"
+    ]
+  },
+  "cohesion": {
+    "0": 0.4666666666666667,
+    "1": 0.6666666666666666,
+    "2": 1.0,
+    "3": 1.0,
+    "4": 1.0,
+    "5": 1.0,
+    "6": 1.0,
+    "7": 1.0,
+    "8": 1.0
+  },
+  "gods": [
+    {
+      "id": "temp_applet_update_fan",
+      "label": "update_fan()",
+      "degree": 4
+    },
+    {
+      "id": "temp_applet_get_temperature",
+      "label": "get_temperature()",
+      "degree": 3
+    },
+    {
+      "id": "temp_applet_fan_off",
+      "label": "fan_off()",
+      "degree": 3
+    },
+    {
+      "id": "temp_applet_update_temperature",
+      "label": "update_temperature()",
+      "degree": 3
+    },
+    {
+      "id": "temp_applet_quit",
+      "label": "quit()",
+      "degree": 3
+    },
+    {
+      "id": "temp_applet_fan_on",
+      "label": "fan_on()",
+      "degree": 2
+    },
+    {
+      "id": "temp_applet_create_indicator_image",
+      "label": "create_indicator_image()",
+      "degree": 2
+    },
+    {
+      "id": "temp_applet_build_menu",
+      "label": "build_menu()",
+      "degree": 2
+    },
+    {
+      "id": "rpi_gpio",
+      "label": "RPi.GPIO",
+      "degree": 1
+    },
+    {
+      "id": "readme",
+      "label": "pi3-addons README",
+      "degree": 0
+    }
+  ],
+  "surprises": [
+    {
+      "source": "update_fan()",
+      "target": "get_temperature()",
+      "source_files": [
+        "temp-applet.py",
+        "temp-applet.py"
+      ],
+      "confidence": "EXTRACTED",
+      "relation": "calls",
+      "note": "Bridges community 1 → community 2"
+    },
+    {
+      "source": "update_fan()",
+      "target": "fan_off()",
+      "source_files": [
+        "temp-applet.py",
+        "temp-applet.py"
+      ],
+      "confidence": "EXTRACTED",
+      "relation": "calls",
+      "note": "Bridges community 0 → community 2"
+    }
+  ],
+  "questions": [
+    {
+      "type": "bridge_node",
+      "question": "Why does `update_fan()` connect `Fan Control` to `System Control Menu`, `Temperature Display Logic`?",
+      "why": "High betweenness centrality (0.013) - this node is a cross-community bridge."
+    },
+    {
+      "type": "bridge_node",
+      "question": "Why does `get_temperature()` connect `Temperature Display Logic` to `System Control Menu`, `Fan Control`?",
+      "why": "High betweenness centrality (0.004) - this node is a cross-community bridge."
+    },
+    {
+      "type": "bridge_node",
+      "question": "Why does `fan_off()` connect `System Control Menu` to `Fan Control`?",
+      "why": "High betweenness centrality (0.004) - this node is a cross-community bridge."
+    },
+    {
+      "type": "isolated_nodes",
+      "question": "What connects `pi3-addons README`, `pi3-addons Quickstart`, `vcgencmd measure_temp` to the rest of the system?",
+      "why": "6 weakly-connected nodes found - possible documentation gaps or missing edges."
+    }
+  ]
+}

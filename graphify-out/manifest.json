@@ -1,0 +1,17 @@
+{
+  "temp-applet.py": {
+    "mtime": 1785729364.443704,
+    "ast_hash": "3e0227e35b00973ebcbbe2e2b5bec7dd",
+    "semantic_hash": "3e0227e35b00973ebcbbe2e2b5bec7dd"
+  },
+  "README.md": {
+    "mtime": 1785729364.443704,
+    "ast_hash": "21b0bb7b92522d4d347cc05b85bfc800",
+    "semantic_hash": "21b0bb7b92522d4d347cc05b85bfc800"
+  },
+  "openwiki/quickstart.md": {
+    "mtime": 1785729364.443704,
+    "ast_hash": "dae89870e1f0bd7ab5d2854043be5046",
+    "semantic_hash": "dae89870e1f0bd7ab5d2854043be5046"
+  }
+}
