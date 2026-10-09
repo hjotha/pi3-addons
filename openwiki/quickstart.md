@@ -3,6 +3,9 @@
 ## Purpose
 `pi3-addons` provides a system tray applet (`temp-applet`) to monitor CPU temperature and usage, and automatically control a cooling fan.
 
+## Major Directories
+- `openwiki/`: Contains project documentation.
+
 ## Entry Points
 - `temp-applet.py`: The main executable script.
 
@@ -20,8 +23,11 @@ python temp-applet.py
 - **System Tray Icon**: Creates a GTK app indicator displaying the current temperature using `gi.repository.AppIndicator3` and `PIL` (Python Imaging Library).
   - The temperature is displayed in red if it reaches 60°C, and green otherwise.
   - A red circle outline is drawn (`draw.ellipse`) if the fan is currently active.
+- **Desktop Notifications**: Initializes `gi.repository.Notify` for the application.
+- **Process Priority**: Uses `os.nice(1)` to run the script at a lower priority.
+- **File Output**: Creates and overwrites a `temp.png` image file in the current working directory for the tray icon.
 
 ## Known Limitations
 - **Hardware Dependent**: Requires a Raspberry Pi (relies on `vcgencmd` and `RPi.GPIO`).
 - **Font Dependency**: Hardcodes the use of `/usr/share/fonts/truetype/freefont/FreeMono.ttf`, which must be present on the system.
-- **Platform**: Requires GTK 3.0 and a desktop environment supporting AppIndicator3.
+- **Platform**: Requires GTK 3.0 and a desktop environment supporting AppIndicator3 and Notify.
